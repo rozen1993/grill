@@ -1,0 +1,14 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { guides } from '../../data/guides';
+import { equipment } from '../../data/catalog';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Photo from '../../components/Photo.astro';
+import EquipmentCard from '../../components/EquipmentCard.astro';
+import CTA from '../../components/CTA.astro';
+export function getStaticPaths(){return guides.map(guide=>({params:{slug:guide.slug},props:{guide}}));}
+const { guide } = Astro.props;
+---
+<Layout title={guide.title} description={guide.intro}>
+  <article class="container page-section"><Breadcrumbs items={[{label:'Guías',href:'/guias/'},{label:guide.title}]} /><header class="article-heading"><span class="eyebrow">Guías · {guide.category}</span><h1>{guide.title}</h1><p>{guide.intro}</p></header><Photo image={guide.image} alt={`Imagen conceptual que acompaña la guía ${guide.title.toLowerCase()}`} class="article-hero" eager sizes="(min-width: 1280px) 1200px, 100vw" /><details class="article-toc-mobile"><summary>En esta guía</summary><nav aria-label="Índice del artículo">{guide.sections.map(s=><a href={`#${s.id}`}>{s.title}</a>)}</nav></details><div class="article-grid"><nav class="article-toc" aria-label="Índice del artículo"><h2>En esta guía</h2>{guide.sections.map(s=><a href={`#${s.id}`}>{s.title}</a>)}<a href="#equipos-relacionados">Equipos relacionados</a></nav><div class="prose">{guide.sections.map(s=><section aria-labelledby={s.id}><h2 id={s.id}>{s.title}</h2><p>{s.text}</p></section>)}<section><h2>Continúa con tu elección</h2><p>Explora los <a href="/equipos/">equipos para alquilar</a> y las <a href="/paquetes/">propuestas de paquetes</a>. Si todavía tienes dudas, puedes <a href="/cotizar/">solicitar orientación para tu reunión</a>.</p></section></div></div><section class="spaced-section" aria-labelledby="equipos-relacionados"><div class="section-heading"><h2 id="equipos-relacionados">Equipos para empezar a elegir</h2></div><div class="grid-three">{equipment.filter(e=>guide.related.some(slug=>slug===e.slug)).map(item=><EquipmentCard item={item} />)}</div></section><CTA /></article>
+</Layout>

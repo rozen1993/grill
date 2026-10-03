@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { packages, faqs } from '../../data/catalog';
+import Photo from '../../components/Photo.astro';
+import PackageCard from '../../components/PackageCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import FAQ from '../../components/FAQ.astro';
+import CTA from '../../components/CTA.astro';
+---
+<Layout title="Paquetes de alquiler para parrillas" description="Compara las propuestas Esencial, Familiar y Celebración. Consulta una combinación de parrilla, cilindro y accesorios para tu próxima reunión.">
+  <div class="container page-section"><Breadcrumbs items={[{label:'Paquetes'}]} /><section class="hero package-list-hero pt-0"><div class="hero-inner"><div class="hero-copy"><span class="eyebrow">Comparte a tu manera</span><h1>Elige cómo quieres celebrar</h1><p>Propuestas para comenzar a organizar tu reunión. Podemos ajustar el equipo y los complementos al espacio y al tipo de evento.</p></div><Photo image="hero" alt="Imagen conceptual de una reunión entre amigos alrededor de una parrilla" class="hero-photo" eager caption /></div></section>
+    <section class="section"><div class="grid-three package-grid">{packages.map(item => <PackageCard item={item} />)}</div></section>
+    <section class="comparison" aria-labelledby="comparar"><div><span class="eyebrow">Elige tu punto de partida</span><h2 id="comparar">Compara los paquetes</h2><p>Composiciones propuestas. Cada elemento se confirmará al cotizar.</p></div><table><caption class="sr-only">Comparación de la composición propuesta de los paquetes</caption><thead><tr><th scope="col">Propuesta</th>{packages.map(p => <th scope="col">{p.name}</th>)}</tr></thead><tbody><tr><th scope="row">Parrilla</th>{packages.map(() => <td><Icon name="check" size={18} /><span class="sr-only">Propuesta</span></td>)}</tr><tr><th scope="row">Utensilios</th>{packages.map(() => <td><Icon name="check" size={18} /><span class="sr-only">Propuesta</span></td>)}</tr><tr><th scope="row">Cilindro para cocinar</th><td>—</td><td>—</td><td><Icon name="check" size={18} /><span class="sr-only">Propuesto</span></td></tr><tr><th scope="row">Mesa de apoyo</th><td>—</td><td>Por confirmar</td><td>—</td></tr><tr><th scope="row">Traslado, carbón y limpieza</th>{packages.map(() => <td>Consultar aparte</td>)}</tr><tr><th scope="row">Precio</th>{packages.map(() => <td>Por cotizar</td>)}</tr></tbody></table><div class="comparison-mobile">{packages.map(p => <article><h3>{p.name}</h3><ul class="check-list">{p.items.map(text => <li><Icon name="check" size={18} />{text}</li>)}<li><Icon name="message" size={18} />Traslado, carbón y limpieza: consultar aparte.</li></ul><p class="font-bold">Por cotizar</p></article>)}</div></section>
+    <CTA title="Una propuesta a tu medida" text="Puedes pedir cambios en los equipos y complementos al contarnos los detalles." />
+    <section class="spaced-section"><div class="section-heading"><h2>Preguntas sobre los paquetes</h2></div><FAQ items={[faqs[2]!,faqs[4]!,faqs[3]!,faqs[1]!]} /></section>
+  </div>
+</Layout>

@@ -1,0 +1,8 @@
+---
+import Field from './Field.astro';
+const { messageRequired = false } = Astro.props;
+---
+<Field name="name" label="Nombre" required autocomplete="name" placeholder="Tu nombre" full maxLength={120} />
+<div class="field full"><label for="phone">Teléfono <span class="required">*</span></label><div class="phone-fields"><input name="prefix" id="prefix" type="tel" autocomplete="tel-country-code" placeholder="+" aria-label="Prefijo de país" required aria-describedby="phone-help prefix-error" maxlength="5" /><input name="phone" id="phone" type="tel" autocomplete="tel-national" placeholder="Tu número de contacto" required aria-describedby="phone-help phone-error" maxlength="25" /></div><p class="field-help" id="phone-help">Añade el prefijo de tu país y un número para responderte.</p><p class="field-error" id="prefix-error"></p><p class="field-error" id="phone-error"></p></div>
+<Field name="email" label="Correo electrónico" type="email" autocomplete="email" placeholder="Tu correo, si prefieres" full maxLength={254} />
+<div class="field full"><label for="message">{messageRequired ? 'Mensaje' : 'Observaciones'}{messageRequired ? <span class="required"> *</span> : <span class="font-normal muted"> (opcional)</span>}</label><textarea id="message" name="message" rows="4" maxlength="1000" placeholder="Cuéntanos si necesitas algún accesorio o tienes una duda…" required={messageRequired} aria-describedby="message-help message-error"></textarea><p id="message-help" class="field-help">Máximo 1000 caracteres. No incluyas información sensible.</p><p class="field-error" id="message-error"></p></div>

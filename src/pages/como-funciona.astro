@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Photo from '../components/Photo.astro';
+import Steps from '../components/Steps.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+import Icon from '../components/Icon.astro';
+---
+<Layout title="Cómo funciona el alquiler" description="Elige tu equipo, consulta los detalles de tu reunión y coordina disponibilidad y condiciones de alquiler. Conoce los pasos para solicitar una cotización.">
+  <div class="container page-section"><Breadcrumbs items={[{label:'Cómo funciona'}]} /><section class="hero story-hero pt-0"><div class="hero-inner"><div class="hero-copy"><span class="eyebrow">Cómo funciona</span><h1>De la idea a la parrilla, <span class="accent">paso a paso</span></h1><p>Explora las opciones, envíanos los detalles del evento y coordinemos la propuesta. El servicio y el traslado se confirman al cotizar.</p></div><Photo image="hero" alt="Imagen conceptual de amigos preparando una parrilla al aire libre" class="hero-photo" eager caption /></div></section>
+    <section class="section" aria-label="Pasos para alquilar"><Steps detailed /></section>
+    <aside class="cta-banner"><div class="cta-copy"><span class="cta-icon"><Icon name="truck" size={36} /></span><div><h2>Consulta las opciones de traslado</h2><p>Indica la zona de tu evento para consultar entrega, recogida y costos.</p></div></div><a class="text-link" href="/contacto/#cobertura">Consultar mi zona<Icon name="arrow" size={18} /></a></aside>
+    <section class="spaced-section"><div class="section-heading"><div><h2>Resolvemos tus dudas</h2><p>Los detalles claros hacen más fácil elegir.</p></div></div><FAQ /></section><CTA />
+  </div>
+</Layout>

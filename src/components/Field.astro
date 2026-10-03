@@ -1,0 +1,5 @@
+---
+interface Props { name: string; label: string; type?: 'text' | 'email' | 'tel' | 'date' | 'number' | 'search'; required?: boolean; help?: string; placeholder?: string; full?: boolean; autocomplete?: string; maxLength?: number; }
+const { name, label, type = 'text', required = false, help, placeholder, full = false, autocomplete, maxLength } = Astro.props;
+---
+<div class:list={['field',{full}]}><label for={name}>{label}{required && <span class="required"> *</span>}{!required && <span class="font-normal muted"> (opcional)</span>}</label><input id={name} name={name} type={type} required={required} placeholder={placeholder} autocomplete={autocomplete} maxlength={maxLength} aria-describedby={`${help ? `${name}-help ` : ''}${name}-error`} />{help && <p class="field-help" id={`${name}-help`}>{help}</p>}<p class="field-error" id={`${name}-error`}></p></div>

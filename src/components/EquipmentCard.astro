@@ -1,0 +1,11 @@
+---
+import type { Equipment } from '../data/catalog';
+import { categories } from '../data/catalog';
+import Photo from './Photo.astro';
+import Button from './Button.astro';
+const { item, filterable = false } = Astro.props as { item: Equipment; filterable?: boolean };
+---
+<article class="card equipment-card" data-catalog-item={filterable ? '' : undefined} data-name={item.name} data-category={item.category} data-search={`${item.name} ${item.type} ${item.short}`}>
+  <a class="card-photo" href={`/equipos/${item.slug}/`} tabindex="-1" aria-hidden="true"><Photo image={item.image} alt={item.alt} sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 100vw" /><span class="image-note">Imagen ilustrativa</span></a>
+  <div class="card-body"><span class="eyebrow muted">{categories.find(c => c.slug === item.category)?.name}</span><h3><a href={`/equipos/${item.slug}/`}>{item.name}</a></h3><p>{item.short}</p><div class="tags"><span>{item.type}</span></div><div class="card-bottom"><strong>Por cotizar</strong><Button href={`/equipos/${item.slug}/`}>Ver equipo</Button></div></div>
+</article>

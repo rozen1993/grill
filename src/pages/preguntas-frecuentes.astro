@@ -1,0 +1,9 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+---
+<Layout title="Preguntas frecuentes sobre el alquiler" description="Resuelve tus dudas sobre la solicitud de cotización, los equipos y paquetes, la reserva, los complementos y las opciones de entrega y recogida.">
+  <div class="container page-section"><Breadcrumbs items={[{label:'Preguntas frecuentes'}]} /><div class="page-intro"><span class="eyebrow">Aquí empieza una buena elección</span><h1>Preguntas frecuentes</h1><p>Lo que necesitas saber antes de organizar tu alquiler.</p></div><div class="max-w-4xl"><FAQ /></div><CTA title="¿Tienes otra pregunta?" text="Cuéntanos sobre tu reunión y las dudas que quieres resolver." /></div>
+</Layout>

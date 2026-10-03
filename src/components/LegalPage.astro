@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import Icon from './Icon.astro';
+interface Props { kind: 'privacidad' | 'condiciones'; }
+const { kind } = Astro.props;
+const privacy = kind === 'privacidad';
+const title = privacy ? 'Privacidad' : 'Condiciones de alquiler';
+const sections = privacy ? [
+  {id:'responsable',title:'Responsable y canales de contacto',text:'El responsable del servicio debe aportar su identidad y los canales para atender consultas sobre el tratamiento de datos. Esta información todavía está en preparación.'},
+  {id:'datos',title:'Datos de la solicitud',text:'Los formularios solicitan nombre y teléfono para responder a tu consulta. El correo es opcional. La cotización también pide la fecha y la zona del evento; los invitados aproximados y las observaciones son opcionales.'},
+  {id:'tratamiento',title:'Uso y conservación',text:'El responsable debe definir y aprobar la finalidad, la base aplicable, los destinatarios y el plazo de conservación de los datos antes de habilitar la recepción de solicitudes.'},
+  {id:'derechos',title:'Consultas y derechos',text:'Los canales y el procedimiento para ejercer derechos sobre los datos deben ser aportados por el responsable. Esta página no es una política de privacidad aprobada.'},
+] : [
+  {id:'solicitud',title:'Solicitud y reserva',text:'La solicitud de cotización no confirma una reserva. Se deben acordar la disponibilidad y las condiciones antes de confirmar el alquiler.'},
+  {id:'oferta',title:'Equipo, duración y precio',text:'El equipo real, los elementos incluidos, la duración del alquiler, la moneda, los impuestos y el costo total deberán quedar especificados en una propuesta confirmada. No hay tarifas aprobadas en esta web.'},
+  {id:'complementos',title:'Traslado y complementos',text:'La entrega, la recogida, el mobiliario, el carbón y la limpieza se consultan por separado. Las opciones y sus condiciones deben confirmarse antes de reservar.'},
+  {id:'devolucion',title:'Uso, devolución y cancelación',text:'El responsable debe aportar las condiciones de uso, devolución, depósito o garantía, daños, cambios y cancelaciones. Esta página no contiene condiciones comerciales aprobadas.'},
+];
+---
+<Layout title={title} description={privacy ? 'Página de privacidad de GrillRent en revisión. Consulta los campos de la solicitud y la información pendiente de aprobación por el responsable.' : 'Condiciones de alquiler de GrillRent en revisión. La solicitud no confirma una reserva; equipo, precio y condiciones deben confirmarse al cotizar.'} noindex>
+  <div class="container page-section"><Breadcrumbs items={[{label:title}]} /><article class="legal"><span class="eyebrow">Información en revisión</span><h1>{title}</h1><aside class="notice"><Icon name="info" size={22} /><p>Este contenido está en preparación y necesita la aprobación del responsable antes de publicarse como {privacy ? 'política de privacidad' : 'condiciones de alquiler'}. No es un documento legal aprobado.</p></aside><nav aria-label="Índice de la página">{sections.map(s=><a href={`#${s.id}`}>{s.title}</a>)}</nav>{sections.map(s=><section aria-labelledby={s.id}><h2 id={s.id}>{s.title}</h2><p>{s.text}</p></section>)}</article></div>
+</Layout>

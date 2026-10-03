@@ -1,0 +1,6 @@
+---
+import { steps } from '../data/catalog';
+import Icon from './Icon.astro';
+const { detailed = false } = Astro.props;
+---
+<ol class:list={['steps grid-three', { 'steps-detailed': detailed }]}>{steps.map((step, i) => <li><span class="step-number">{i + 1}</span><Icon name={step.icon} size={36} /><div><h3>{step.name}</h3><p>{step.text}</p>{detailed && <a class="text-link" href={step.href}>{step.link}<Icon name="arrow" size={18} /></a>}</div></li>)}</ol>

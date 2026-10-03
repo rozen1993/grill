@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ReceiptView from '../../components/ReceiptView.astro';
+import Icon from '../../components/Icon.astro';
+import Button from '../../components/Button.astro';
+export function getStaticPaths(){return import.meta.env.DEV ? [{params:{state:'estados'}}] : [];}
+---
+<Layout title="Estados de interfaz · demo" description="Vista de desarrollo para revisar estados de interfaz. No representa solicitudes ni reservas reales." noindex>
+  <div class="container page-section"><div class="page-intro"><span class="demo-label">Solo desarrollo · sin envío ni reserva real</span><h1>Estados de la interfaz</h1><p>Esta ruta se excluye del build de producción.</p></div><section class="form-card"><h2>Botones</h2><div class="button-group"><Button href="/cotizar/">Normal</Button><Button href="/equipos/" secondary>Secundario</Button><button class="button" disabled>Desactivado</button><button class="button" disabled aria-busy="true">Enviando…</button></div></section><section class="form-card mt-6"><h2>Campo con error</h2><div class="field"><label for="demo-date">Fecha del evento</label><input id="demo-date" type="date" aria-invalid="true" aria-describedby="demo-date-error" /><p class="field-error" id="demo-date-error">Elige una fecha para continuar.</p></div><div class="form-status">No pudimos confirmar la recepción de tu solicitud. Tus datos siguen aquí. Intenta de nuevo.</div></section><section class="empty-state mt-6"><Icon name="grill" size={64} /><h2>No encontramos equipos con esos filtros</h2><p>Prueba con otros filtros.</p><Button href="/equipos/" secondary>Limpiar filtros</Button></section><section class="notice mt-6"><Icon name="check" /><p>Selección activa: Parrilla a carbón. Este estado se comunica con texto e icono además del color.</p></section><ReceiptView demo /></div>
+</Layout>

@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import { equipment, categories } from '../data/catalog';
+import EquipmentCard from './EquipmentCard.astro';
+import CTA from './CTA.astro';
+import Icon from './Icon.astro';
+const { category = null } = Astro.props as { category?: typeof categories[number] | null };
+const title = category ? ({parrillas:'Alquiler de parrillas',cilindros:'Alquiler de cilindros para cocinar',accesorios:'Accesorios para parrilla en alquiler'}[category.slug]) : 'Equipos para alquilar';
+---
+<Layout title={title} description={category?.description || 'Encuentra parrillas, cilindros para cocinar y accesorios para tu reunión. Consulta el equipo y solicita una cotización según tus necesidades.'}>
+  <div class="container page-section" data-catalog data-initial-category={category?.slug || ''}>
+    <Breadcrumbs items={category ? [{ label: 'Equipos', href: '/equipos/' }, { label: category.name }] : [{label:'Equipos'}]} />
+    <div class="page-intro"><span class="eyebrow">Elige tu próxima reunión</span><h1>{category?.title || 'Encuentra el equipo para tu reunión'}</h1><p>{category?.description || 'Elige según el tipo de preparación y el espacio disponible. Si no sabes cuál necesitas, cuéntanos cómo será tu reunión.'}</p></div>
+    <div class="catalog-search"><label class="sr-only" for="buscar">Buscar equipos</label><input id="buscar" type="search" placeholder="Buscar por nombre o tipo de equipo…" autocomplete="off" /><Icon name="search" /></div>
+    <div class="catalog-toolbar"><nav class="category-tabs" aria-label="Categorías de equipos"><a class="chip" href="/equipos/" aria-current={!category ? 'page' : undefined}>Todos</a>{categories.map(c => <a class="chip" href={`/equipos/${c.slug}/`} aria-current={category?.slug === c.slug ? 'page' : undefined}>{c.name}</a>)}</nav><button type="button" class="button button-secondary filter-trigger" data-open-dialog="catalog-filters" aria-haspopup="dialog" aria-controls="catalog-filters"><Icon name="filter" size={18} />Filtrar</button><div class="sort-control"><label for="catalog-order">Ordenar</label><select id="catalog-order"><option value="az">Nombre A–Z</option><option value="za">Nombre Z–A</option></select></div></div>
+    <div class="catalog-status"><p id="result-count" aria-live="polite">{category ? equipment.filter(e => e.category === category.slug).length : equipment.length} opciones de equipo</p><div class="active-filters" id="active-filters"></div></div>
+    <div class="grid-three" id="catalog-grid">{equipment.map(item => <div data-catalog-wrapper hidden={!!category && item.category !== category.slug}><EquipmentCard item={item} filterable /></div>)}</div>
+    <div class="empty-state" id="catalog-empty" hidden><Icon name="grill" size={64} /><h2>No encontramos equipos con esos filtros</h2><p>Prueba con otros filtros o cambia tu búsqueda para ver más opciones.</p><button type="button" class="button button-secondary" data-clear-catalog>Limpiar filtros<Icon name="arrow" size={18} /></button></div>
+    <aside class="notice mt-8"><Icon name="info" size={20} /><p>Las imágenes son ilustrativas. Consulta las características del equipo, su disponibilidad y las condiciones antes de reservar.</p></aside>
+    <CTA title="¿Necesitas ayuda para elegir?" text="Cuéntanos cómo será tu reunión y qué quieres preparar." />
+    <div class="button-group"><a class="text-link" href="/paquetes/">Ver propuestas de paquetes<Icon name="arrow" size={18} /></a><a class="text-link" href="/preguntas-frecuentes/">Resolver dudas sobre el alquiler<Icon name="arrow" size={18} /></a></div>
+  </div>
+  <dialog id="catalog-filters" class="drawer" aria-labelledby="filter-title"><div class="drawer-head"><h2 id="filter-title">Filtrar equipos</h2><button type="button" class="icon-button" data-close-dialog aria-label="Cerrar filtros"><Icon name="close" /></button></div><fieldset><legend class="font-bold text-sm">Categoría</legend><div class="filter-options"><label for="filter-all"><input id="filter-all" type="radio" name="filter-category" value="" checked={!category} />Todos los equipos</label>{categories.map(c => <label for={`filter-${c.slug}`}><input id={`filter-${c.slug}`} type="radio" name="filter-category" value={c.slug} checked={category?.slug === c.slug} />{c.name}</label>)}</div></fieldset><div class="button-group"><button class="button w-full" type="button" id="apply-filters">Aplicar filtros<Icon name="check" size={18} /></button><button class="button button-secondary w-full" type="button" id="reset-panel">Limpiar</button></div></dialog>
+  <script src="../scripts/catalog.ts"></script>
+</Layout>

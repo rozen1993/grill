@@ -1,0 +1,8 @@
+---
+interface Props { image: string; alt: string; class?: string; eager?: boolean; sizes?: string; caption?: boolean; }
+const { image, alt, class: className = '', eager = false, sizes = '(min-width: 1024px) 600px, 100vw', caption = false } = Astro.props;
+---
+<figure class:list={['photo', className]}>
+  <img src={`/images/${image}-960.webp`} srcset={`/images/${image}-480.webp 480w, /images/${image}-960.webp 960w, /images/${image}-1440.webp 1440w`} sizes={sizes} width="1440" height="960" alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : 'auto'} />
+  {caption && <figcaption>Imagen conceptual · equipo y composición por confirmar</figcaption>}
+</figure>

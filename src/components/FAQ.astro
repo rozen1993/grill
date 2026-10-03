@@ -1,0 +1,7 @@
+---
+import { faqs } from '../data/catalog';
+import Icon from './Icon.astro';
+interface Props { items?: typeof faqs; compact?: boolean; }
+const { items = faqs, compact = false } = Astro.props;
+---
+<div class:list={['faq-list', { 'faq-compact': compact }]}>{items.map(item => <details><summary>{item.question}<Icon name="plus" size={20} /></summary><div class="faq-answer"><p>{item.answer}</p></div></details>)}</div>

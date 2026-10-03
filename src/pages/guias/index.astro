@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { guides } from '../../data/guides';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Photo from '../../components/Photo.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import CTA from '../../components/CTA.astro';
+---
+<Layout title="Guías para elegir y organizar tu parrilla" description="Ideas para preparar una reunión al aire libre, elegir una parrilla y consultar las diferencias entre una parrilla y un cilindro para cocinar.">
+  <div class="container page-section"><Breadcrumbs items={[{label:'Guías'}]} /><section class="hero story-hero pt-0"><div class="hero-inner"><div class="hero-copy"><span class="eyebrow">Guías y consejos</span><h1>Ideas para tu <span class="accent">próxima parrilla</span></h1><p>Preguntas útiles y detalles que te ayudan a elegir el equipo y organizar tu reunión.</p></div><Photo image="hero" alt="Imagen conceptual de amigos compartiendo una parrilla en un jardín" class="hero-photo" eager caption /></div></section>
+    <section class="section" data-guide-list><div class="category-tabs mb-6" aria-label="Filtrar guías"><button type="button" class="chip" aria-pressed="true" data-guide-filter="">Todas</button><button type="button" class="chip" aria-pressed="false" data-guide-filter="Equipos">Equipos</button><button type="button" class="chip" aria-pressed="false" data-guide-filter="Reuniones">Reuniones</button></div><div class="grid-three">{guides.map(g => <article class="card guide-card" data-guide-category={g.category}><a href={`/guias/${g.slug}/`} class="card-photo" tabindex="-1" aria-hidden="true"><Photo image={g.image} alt={`Imagen conceptual para la guía ${g.title.toLowerCase()}`} sizes="(min-width: 1024px) 380px, 100vw" /></a><div class="card-body"><span class="eyebrow">{g.category}</span><h2 class="text-2xl"><a href={`/guias/${g.slug}/`}>{g.title}</a></h2><p>{g.intro}</p><a class="text-link" href={`/guias/${g.slug}/`}>Leer guía<Icon name="arrow" size={18} /><span class="sr-only">: {g.title}</span></a></div></article>)}</div></section>
+    <aside class="featured-guide"><Photo image="parrilla" alt="Imagen ilustrativa de una parrilla a carbón en un jardín" /><div><span class="eyebrow">Empieza por una buena elección</span><h2>Cómo elegir una parrilla para tu reunión</h2><p>El espacio, el tipo de preparación y las preguntas que conviene hacer antes de alquilar.</p><div class="button-group"><Button href="/guias/como-elegir-parrilla/">Leer guía completa</Button></div></div></aside><CTA />
+  </div>
+  <script>
+    const guideButtons = document.querySelectorAll<HTMLButtonElement>('[data-guide-filter]');
+    guideButtons.forEach(button => button.addEventListener('click', () => {
+      guideButtons.forEach(b => b.setAttribute('aria-pressed',String(b===button)));
+      document.querySelectorAll<HTMLElement>('[data-guide-category]').forEach(card => card.hidden = !!button.dataset.guideFilter && card.dataset.guideCategory !== button.dataset.guideFilter);
+    }));
+  </script>
+</Layout>

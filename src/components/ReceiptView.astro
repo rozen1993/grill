@@ -1,0 +1,6 @@
+---
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+const { demo = false } = Astro.props;
+---
+<div class="state-page" data-receipt-view hidden={!demo}>{demo && <span class="demo-label">Demo de desarrollo · no se ha enviado una solicitud</span>}<span class="state-icon"><Icon name="check" size={40} /></span><h1>Solicitud recibida</h1><p>Gracias por contarnos sobre tu reunión. Tu reserva se confirmará al acordar disponibilidad y condiciones de alquiler.</p><aside class="summary-card"><h2>Resumen de tu solicitud</h2><dl><dt>Tu elección</dt><dd data-receipt-selection>{demo ? 'Vista de ejemplo, sin selección real' : ''}</dd><dt>Fecha del evento</dt><dd data-receipt-date>{demo ? 'Sin fecha real' : ''}</dd><dt>Distrito o zona</dt><dd data-receipt-zone>{demo ? 'Sin zona real' : ''}</dd></dl><p>Se revisarán los detalles para coordinar la disponibilidad y las condiciones. Esta recepción no confirma una reserva.</p></aside><div class="button-group"><Button href="/equipos/">Volver a equipos</Button><Button href="/" secondary arrow={false}>Volver al inicio</Button></div></div>

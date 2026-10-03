@@ -1,0 +1,6 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+const { title = '¿Ya tienes una reunión en mente?', text = 'Cuéntanos la fecha, el lugar y lo que necesitas. Empecemos por los detalles.' } = Astro.props;
+---
+<aside class="cta-banner"><div class="cta-copy"><span class="cta-icon"><Icon name="grill" size={36} /></span><div><h2>{title}</h2><p>{text}</p></div></div><Button href="/cotizar/">Solicitar cotización</Button></aside>

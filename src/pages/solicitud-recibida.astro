@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ReceiptView from '../components/ReceiptView.astro';
+import Icon from '../components/Icon.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="Estado de tu solicitud" description="Revisa la recepción de tu solicitud de cotización. La disponibilidad y las condiciones deben acordarse antes de confirmar una reserva." noindex>
+  <div class="container"><div class="state-page" data-receipt-missing><span class="state-icon"><Icon name="message" size={40} /></span><h1>Revisa el estado de tu solicitud</h1><p>No hay una recepción confirmada para mostrar en esta sesión. Si acabas de enviar una solicitud, comprueba el mensaje del formulario.</p><div class="button-group"><Button href="/cotizar/">Ir a cotización</Button><Button href="/equipos/" secondary arrow={false}>Explorar equipos</Button></div></div><ReceiptView /></div>
+  <script>
+    try {
+      const receipt = JSON.parse(sessionStorage.getItem('grillrent-receipt') || 'null');
+      if (receipt?.received === true && typeof receipt.at === 'number' && Date.now() - receipt.at < 30*60*1000 && Date.now() >= receipt.at) {
+        document.querySelector<HTMLElement>('[data-receipt-missing]')!.hidden = true;
+        document.querySelector<HTMLElement>('[data-receipt-view]')!.hidden = false;
+        document.querySelector('[data-receipt-selection]')!.textContent = receipt.selection || 'Consulta de contacto';
+        document.querySelector('[data-receipt-date]')!.textContent = receipt.date || 'No indicada';
+        document.querySelector('[data-receipt-zone]')!.textContent = receipt.zone || 'No indicada';
+      }
+    } catch { /* Without a confirmed service receipt, the default view stays visible. */ }
+  </script>
+</Layout>

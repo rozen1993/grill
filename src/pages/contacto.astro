@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business } from '../data/site';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ContactFields from '../components/ContactFields.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="Contacto y consultas sobre tu reunión" description="Cuéntanos qué estás organizando. Consulta equipos, complementos y opciones de traslado para tu zona o solicita una cotización completa.">
+  <div class="container page-section"><Breadcrumbs items={[{label:'Contacto'}]} /><div class="page-intro"><span class="eyebrow">Estamos para conversar</span><h1>Hablemos de tu reunión</h1><p>¿Tienes dudas sobre un equipo o necesitas ayuda para elegir? Cuéntanos qué estás organizando y te orientaremos con las opciones disponibles.</p></div>
+    <div class="contact-grid"><form class="form-card" id="contact-form" data-endpoint={business.formEndpoint || ''} data-whatsapp={business.whatsapp || ''} novalidate><h2>Cuéntanos tu idea</h2><p>Los campos con * son necesarios. El correo es opcional.</p><div class="form-fields"><ContactFields messageRequired /><div class="field full"><label for="contact-zone">Distrito o zona <span class="font-normal muted">(opcional)</span></label><input id="contact-zone" name="zone" type="text" maxlength="120" autocomplete="address-level2" placeholder="Zona de tu reunión" /></div></div><p class="form-note">Usaremos tus datos para responder a esta consulta. Lee la <a href="/privacidad/" target="_blank" rel="noopener">política de privacidad (abre otra pestaña)</a>.</p><div class="form-actions"><button type="submit" class="button w-full" data-submit><span data-submit-label>Enviar consulta</span><Icon name="arrow" size={20} /></button></div><div class="form-status" id="contact-status" role="alert"></div><noscript><p class="form-status">Activa JavaScript para enviar una consulta.</p></noscript></form>
+      <aside class="contact-side"><Photo image="hero" alt="Imagen conceptual de una reunión alrededor de una parrilla" class="contact-photo" /><p class="gallery-caption">Imagen conceptual para la propuesta de GrillRent.</p><div class="coverage-box" id="cobertura"><Icon name="truck" size={32} /><h2>Consulta tu zona</h2><p>Indica dónde será tu reunión para preguntar por las opciones de entrega y recogida. La cobertura se confirma al responder.</p><form id="coverage-form"><div class="field"><label for="coverage-zone">Distrito o zona</label><input id="coverage-zone" type="text" maxlength="120" required placeholder="¿Dónde será tu reunión?" /></div><button class="button button-secondary" type="submit">Preparar consulta<Icon name="arrow" size={18} /></button></form><p class="small" id="coverage-status" role="status"></p></div><h2>¿Ya tienes una fecha?</h2><p>Completa los detalles de tu evento y consulta el equipo o paquete que tienes en mente.</p><div class="button-group"><Button href="/cotizar/">Cotización completa</Button></div></aside>
+    </div>
+  </div><script src="../scripts/contact.ts"></script>
+</Layout>

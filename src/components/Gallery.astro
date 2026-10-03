@@ -1,0 +1,25 @@
+---
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+interface Props { images: { image: string; alt: string; label: string }[]; id?: string; }
+const { images, id = 'equipment-gallery' } = Astro.props;
+const first = images[0]!;
+---
+<div data-gallery>
+  <div class="gallery-main"><Photo image={first.image} alt={first.alt} class="detail-photo" eager /><button type="button" class="icon-button gallery-expand" data-open-dialog={id} aria-label="Ampliar imagen" aria-haspopup="dialog" aria-controls={id}><Icon name="expand" size={20} /></button></div>
+  <div class="gallery-thumbs" aria-label="Vistas de la galería">{images.map((im,i) => <button type="button" data-gallery-image={im.image} data-gallery-alt={im.alt} aria-label={im.label} aria-pressed={i === 0 ? 'true' : 'false'}><img src={`/images/${im.image}-480.webp`} alt="" width="480" height="320" loading="lazy" /></button>)}</div>
+  <p class="gallery-caption">Imágenes conceptuales. Las fotos y características del equipo se confirmarán al cotizar.</p>
+  <dialog id={id} class="gallery-dialog" aria-label="Vista ampliada de la imagen"><button type="button" class="icon-button" data-close-dialog aria-label="Cerrar imagen ampliada"><Icon name="close" /></button><img src={`/images/${first.image}-1440.webp`} alt={first.alt} width="1440" height="960" /></dialog>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(gallery => {
+    const main = gallery.querySelector<HTMLImageElement>('.gallery-main img')!;
+    const expanded = gallery.querySelector<HTMLImageElement>('dialog img')!;
+    gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-image]').forEach(button => button.addEventListener('click', () => {
+      const name = button.dataset.galleryImage!; main.src = `/images/${name}-960.webp`;
+      main.srcset = `/images/${name}-480.webp 480w, /images/${name}-960.webp 960w, /images/${name}-1440.webp 1440w`;
+      main.alt = button.dataset.galleryAlt!; expanded.src = `/images/${name}-1440.webp`; expanded.alt = main.alt;
+      gallery.querySelectorAll('[data-gallery-image]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    }));
+  });
+</script>

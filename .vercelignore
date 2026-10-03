@@ -1,0 +1,15 @@
+GrillRent_Kit_Codex/
+GrillRent_Kit_Codex.zip
+assets/concepts/
+node_modules/
+dist/
+.astro/
+.git/
+.vercel/
+tmp/
+docs/
+scripts/
+.env
+.env.*
+*.log
+__pycache__/

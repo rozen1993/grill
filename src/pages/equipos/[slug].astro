@@ -1,0 +1,13 @@
+---
+import { categories, equipment } from '../../data/catalog';
+import Catalog from '../../components/Catalog.astro';
+import EquipmentDetail from '../../components/EquipmentDetail.astro';
+export function getStaticPaths() {
+  return [
+    ...categories.map(category => ({params:{slug:category.slug},props:{category,item:null}})),
+    ...equipment.map(item => ({params:{slug:item.slug},props:{item,category:null}})),
+  ];
+}
+const { category, item } = Astro.props;
+---
+{category ? <Catalog category={category} /> : item && <EquipmentDetail item={item} />}

@@ -1,0 +1,26 @@
+# Dependencias, builds y cachés regenerables
+/node_modules/
+/dist/
+/.astro/
+/.vercel/
+/tmp/
+__pycache__/
+*.py[cod]
+*.tsbuildinfo
+*.log
+
+# Configuración privada: solo la plantilla se versiona
+.env
+.env.*
+!.env.example
+
+# Referencias locales: se conservan, pero no son necesarias para compilar
+/GrillRent_Kit_Codex/
+/GrillRent_Kit_Codex.zip
+/assets/concepts/
+/docs/verification/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini

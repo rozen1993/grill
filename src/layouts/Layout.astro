@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/500.css';
+import '@fontsource/manrope/600.css';
+import '@fontsource/manrope/700.css';
+import '@fontsource/manrope/800.css';
+import '@fontsource/caveat/600.css';
+import { business, navigation, extraNavigation } from '../data/site';
+import Brand from '../components/Brand.astro';
+import Icon from '../components/Icon.astro';
+interface Props { title: string; description: string; noindex?: boolean; stickyCTA?: boolean; }
+const { title, description, noindex = false, stickyCTA = false } = Astro.props;
+const path = Astro.url.pathname;
+const indexable = business.launchReady && !!business.domain && !noindex;
+const canonical = business.domain ? new URL(path, business.domain).href : null;
+const year = new Intl.DateTimeFormat('en', { year: 'numeric', timeZone: 'America/Lima' }).format(new Date());
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | {business.name}</title><meta name="description" content={description} />
+    <meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#FF6418" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" /><meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={`${title} | ${business.name}`} /><meta property="og:description" content={description} />
+    <meta property="og:site_name" content={business.name} />
+    {canonical && <><meta property="og:url" content={canonical} /><meta property="og:image" content={new URL('/images/hero-1440.webp', business.domain!).href} /><meta property="og:image:alt" content="Imagen conceptual de una reunión al aire libre alrededor de una parrilla" /></>}
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body class:list={{ 'has-sticky-cta': stickyCTA }}>
+    <a class="skip-link" href="#contenido-principal">Ir al contenido</a>
+    <header class="site-header"><div class="container header-inner"><Brand />
+      <nav class="desktop-nav" aria-label="Navegación principal">{navigation.map(link => <a href={link.href} aria-current={path.startsWith(link.href) ? 'page' : undefined}>{link.label}</a>)}</nav>
+      <div class="header-actions"><a class="icon-button search-link" href="/equipos/#buscar" aria-label="Buscar equipos"><Icon name="search" size={22} /></a><a class="button header-quote" href="/cotizar/">Cotizar<Icon name="arrow" size={18} /></a><button class="icon-button mobile-menu-trigger" type="button" data-open-dialog="mobile-menu" aria-label="Abrir menú" aria-haspopup="dialog" aria-controls="mobile-menu"><Icon name="menu" size={26} /></button></div>
+    </div></header>
+    <dialog id="mobile-menu" class="drawer menu-drawer" aria-labelledby="menu-title"><div class="drawer-head"><span id="menu-title" class="brand-text">GrillRent</span><button type="button" class="icon-button" data-close-dialog aria-label="Cerrar menú"><Icon name="close" /></button></div><nav aria-label="Navegación móvil"><a href="/">Inicio</a>{[...navigation, ...extraNavigation].map(link => <a href={link.href} aria-current={path.startsWith(link.href) ? 'page' : undefined}>{link.label}<Icon name="chevron" size={18} /></a>)}<a href="/privacidad/">Privacidad</a><a href="/condiciones/">Condiciones</a></nav><a class="button w-full" href="/cotizar/">Solicitar cotización<Icon name="arrow" size={20} /></a></dialog>
+    <main id="contenido-principal" tabindex="-1"><slot /></main>
+    <footer class="site-footer"><div class="container"><div class="footer-main"><div class="footer-brand"><Brand /><p>Una buena reunión empieza<br />con una buena elección.</p></div><div><h2>Encuentra tu opción</h2><a href="/equipos/">Todos los equipos</a><a href="/equipos/parrillas/">Parrillas</a><a href="/equipos/cilindros/">Cilindros para cocinar</a><a href="/equipos/accesorios/">Accesorios</a><a href="/paquetes/">Paquetes</a></div><div><h2>Te acompañamos</h2><a href="/como-funciona/">Cómo funciona</a><a href="/nosotros/">Nosotros</a><a href="/guias/">Guías y consejos</a><a href="/preguntas-frecuentes/">Preguntas frecuentes</a><a href="/contacto/">Contacto</a></div><div class="footer-invitation"><h2>Tu próxima reunión</h2><p>Cuéntanos lo que tienes en mente.</p><a class="text-link" href="/cotizar/">Solicitar cotización<Icon name="arrow" size={18} /></a></div></div><div class="footer-bottom"><p>© {year} GrillRent</p><div><a href="/condiciones/">Condiciones de alquiler</a><a href="/privacidad/">Privacidad</a></div></div></div></footer>
+    <script>
+      document.querySelectorAll<HTMLButtonElement>('[data-open-dialog]').forEach(trigger => {
+        const dialog = document.getElementById(trigger.dataset.openDialog!) as HTMLDialogElement | null;
+        if (!dialog) return;
+        trigger.addEventListener('click', () => { dialog.showModal(); document.body.classList.add('dialog-open'); });
+        dialog.querySelectorAll('[data-close-dialog]').forEach(button => button.addEventListener('click', () => dialog.close()));
+        dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
+        dialog.addEventListener('close', () => { document.body.classList.remove('dialog-open'); trigger.focus(); });
+      });
+      if (new URLSearchParams(location.search).has('q')) document.querySelector('meta[name="robots"]')?.setAttribute('content', 'noindex, follow');
+    </script>
+  </body>
+</html>

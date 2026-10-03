@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Photo from '../components/Photo.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import CTA from '../components/CTA.astro';
+---
+<Layout title="Nuestra propuesta para tus reuniones" description="Explora la propuesta de GrillRent: parrillas, cilindros para cocinar y accesorios para elegir según tu espacio, tu preparación y tu próxima reunión.">
+  <div class="container page-section"><Breadcrumbs items={[{label:'Nosotros'}]} /><section class="hero story-hero pt-0"><div class="hero-inner"><div class="hero-copy"><span class="eyebrow">Nuestra propuesta</span><h1>Tu reunión empieza con una <span class="accent">buena elección</span></h1><p>Queremos ayudarte a encontrar el equipo para tu próxima reunión. Explora parrillas, cilindros para cocinar y accesorios, y conversemos sobre lo que necesitas.</p><div class="button-group"><Button href="/equipos/">Ver equipos</Button><Button href="/contacto/" secondary arrow={false}>Contactar</Button></div></div><Photo image="hero" alt="Imagen conceptual de una reunión entre amigos en un jardín" class="hero-photo" eager caption /></div></section>
+    <section class="benefits" aria-label="Qué puedes consultar"><div><Icon name="grill" size={32} /><h2>El equipo adecuado</h2><p>Parrillas, cilindros para cocinar y utensilios según tu idea.</p></div><div><Icon name="message" size={32} /><h2>Los detalles de tu reunión</h2><p>Una propuesta que empieza por lo que quieres preparar.</p></div><div><Icon name="shield" size={32} /><h2>Condiciones claras</h2><p>Disponibilidad y detalles acordados antes de reservar.</p></div></section>
+    <section class="about-story"><Photo image="parrilla" alt="Imagen ilustrativa de una parrilla a carbón en un jardín" /><div><span class="eyebrow">Más tiempo para compartir</span><h2>Piensa en tu reunión.<br />Empecemos por el equipo.</h2><p>Una comida entre amigos, una reunión familiar o una ocasión especial: cada plan tiene sus propios detalles.</p><p>Cuéntanos el espacio disponible, la fecha y lo que quieres preparar. La elección del equipo, los accesorios y las condiciones se revisan juntos al cotizar.</p><a class="text-link" href="/como-funciona/">Conoce cómo funciona<Icon name="arrow" size={18} /></a></div></section><CTA />
+  </div>
+</Layout>

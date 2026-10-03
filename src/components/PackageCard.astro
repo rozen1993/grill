@@ -1,0 +1,11 @@
+---
+import { packages } from '../data/catalog';
+import Photo from './Photo.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+const { item } = Astro.props as { item: typeof packages[number] };
+---
+<article class="card package-card">
+  <a class="card-photo" href={`/paquetes/${item.slug}/`} tabindex="-1" aria-hidden="true"><Photo image={item.image} alt={`Imagen conceptual para la propuesta de paquete ${item.name}`} sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 100vw" /><span class="image-note">Imagen ilustrativa</span></a>
+  <div class="card-body"><span class="eyebrow">{item.focus}</span><h3><a href={`/paquetes/${item.slug}/`}>Paquete {item.name}</a></h3><p>{item.description}</p><ul class="check-list">{item.items.map(text => <li><Icon name="check" size={18} /><span>{text}</span></li>)}</ul><p class="small muted">Combinación propuesta, sujeta a confirmación.</p><div class="card-bottom"><strong>Por cotizar</strong><Button href={`/paquetes/${item.slug}/`}>Ver paquete</Button></div></div>
+</article>
