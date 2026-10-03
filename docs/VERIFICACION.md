@@ -25,3 +25,9 @@ No se puede certificar recepción comercial: no hay servicio ni destinatario con
 Se comprobó una copia limpia formada únicamente por los 76 archivos admitidos por `.gitignore` (aproximadamente 1,8 MB), sin kit, PNG originales, dependencias, cachés ni informes generados. `npm ci --offline --no-audit --no-fund` instaló desde el lockfile y `npm run build` generó 25 páginas, con 0 errores, warnings o hints. El proyecto no depende de los archivos locales excluidos. Esta prueba local no sustituye el despliegue ni la revisión visual pendiente.
 
 `vercel.json` fija Astro, `npm ci`, `npm run build` y `dist`; Node 24 está fijado en `package.json` y `.nvmrc`. Las carpetas generadas `dist/` y `tmp/` se retiraron de la carpeta de trabajo a un respaldo temporal reversible. Las referencias originales y las dependencias instaladas se conservan localmente, excluidas de Git y del envío por Vercel CLI.
+
+## Corrección del filtro de Vercel — 3 de octubre de 2026
+
+El primer despliegue falló al resolver `../scripts/catalog.ts`. La regla `scripts/` de `.vercelignore` también coincidía con `src/scripts/`. La comprobación anterior solo aplicaba `.gitignore`, por lo que no detectó este problema.
+
+Se anclaron las carpetas de `.vercelignore` a la raíz: `/scripts/` excluye únicamente las utilidades locales. Se verificó que los cuatro módulos `src/scripts/catalog.ts`, `contact.ts`, `forms.ts` y `quote.ts` permanecen incluidos. Una nueva copia sin las carpetas auxiliares excluidas completó la instalación desde el lockfile y el build de 25 páginas, con 0 errores, warnings o hints. La comprobación local se realizó en Windows; el resultado de Vercel debe verificarse en su despliegue del commit corregido.

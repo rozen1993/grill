@@ -1,14 +1,16 @@
-GrillRent_Kit_Codex/
-GrillRent_Kit_Codex.zip
-assets/concepts/
-node_modules/
-dist/
-.astro/
-.git/
-.vercel/
-tmp/
-docs/
-scripts/
+# Anclar las carpetas a la raíz para no excluir código de src/.
+/GrillRent_Kit_Codex/
+/GrillRent_Kit_Codex.zip
+/assets/concepts/
+/node_modules/
+/dist/
+/.astro/
+/.git/
+/.vercel/
+/tmp/
+/docs/
+# Solo utilidades locales; src/scripts/ debe llegar al build.
+/scripts/
 .env
 .env.*
 *.log
